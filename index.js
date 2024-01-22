@@ -1,4 +1,4 @@
-const stripe = require('stripe')('your_stripe_secret_key');
+const stripe = require('stripe')('sk_test_26PHem9AhJZvU623DfE1x4sd');
 
 exports.handler = async (event) => {
     try {
