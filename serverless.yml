@@ -1,0 +1,64 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: stripe-integration
+# app and org for use with dashboard.serverless.com
+# app: stripe-integration
+# org: tossdown
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: "3"
+
+plugins:
+  - serverless-offline
+  
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  httpApi:
+    cors: true
+  vpc:
+    securityGroupIds:
+      - sg-09f955d53175027b4
+    subnetIds:
+      - subnet-0bf0551da65755c18
+      - subnet-040c3e9e469de95ac
+
+functions:
+  placeOrder:
+    handler: ./src/index.handler
+    events:
+     - httpApi:
+         path: /posOrder/business/{business_id}/create
+         method: post
+  createDelivery:
+    handler: ./dist/delivery/index.createDelivery
+    events:
+      - http:
+          method: POST
+          path: /createDelivery
+  createQuote:
+    handler: ./dist/delivery/index.createQuote
+    events:
+      - http:
+          method: POST
+          path: /createQuote        
+custom:
+  stageVariables:
+    dev:
+      CLOVER_API_PATH: 'https://sandbox.dev.clover.com/v3/'
+    prod:
+      CLOVER_API_PATH: 'https://api.clover.com/v3/'
