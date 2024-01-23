@@ -6,4 +6,20 @@ const getConnectionToken = async () => {
   return connectionToken.secret;
 };
 
-module.exports = { getConnectionToken };
+const createPaymentIntent = async (amount) => {
+    const intent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd', 
+      payment_method_types: ['card_present'],
+      capture_method: 'manual',
+    });
+    return intent;
+};
+
+const capturePaymentIntent = async (paymentIntentId) => {
+    const intent = await stripe.paymentIntents.capture(paymentIntentId);
+    return intent;
+};
+  
+
+module.exports = { getConnectionToken, createPaymentIntent, capturePaymentIntent };
