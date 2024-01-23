@@ -6,6 +6,8 @@ const port = process.env.PORT || 8000
 app.use(cors())
 const products = require("./routes/product.js")
 const cart = require("./routes/cart.js")
+const { getConnectionToken } = require('./routes/stripeutils.js');
+
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World waqar!')
@@ -25,6 +27,17 @@ app.listen(port, () => {
   console.log(`App is running listening on port ${port}`)
 })
 console.log("again")
+
+app.post('/connection_token', async (req, res) => {
+  try {
+    const secret = await getConnectionToken();
+    res.json({ secret });
+  } catch (error) {
+    console.error("Error generating connection token:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 exports.handler = async (event) => {
     return {
         statusCode: 200,
