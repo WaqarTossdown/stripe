@@ -25,3 +25,9 @@ app.listen(port, () => {
   console.log(`App is running listening on port ${port}`)
 })
 console.log("again")
+exports.handler = async (event) => {
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Hello, World!' }),
+    };
+};
