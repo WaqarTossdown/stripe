@@ -10,8 +10,9 @@ const createPaymentIntent = async (amount) => {
     const intent = await stripe.paymentIntents.create({
       amount,
       currency: 'usd', 
-      payment_method_types: ['card_present'],
-      capture_method: 'automatic',
+      payment_method_types: ['card_present','card'],
+      capture_method: 'manual',
+
     });
     return intent;
 };

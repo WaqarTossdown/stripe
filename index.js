@@ -65,6 +65,7 @@ app.post('/capture_payment_intent', async (req, res) => {
     console.log('Payment Intent Status:', paymentIntent.status); 
 
     if (paymentIntent.status !== 'requires_capture') {
+      console.log(paymentIntent.status)
       throw new Error('Payment intent is not eligible for capture.');
     }
 
