@@ -11,15 +11,20 @@ const createPaymentIntent = async (amount) => {
       amount,
       currency: 'usd', 
       payment_method_types: ['card_present'],
-      capture_method: 'manual',
+      capture_method: 'card_present',
     });
     return intent;
 };
 
 const capturePaymentIntent = async (paymentIntentId) => {
+    try {
     const intent = await stripe.paymentIntents.capture(paymentIntentId);
     return intent;
+  } catch (error) {
+    console.error("Error capturing payment intent:", error);
+    throw error;
+  }
 };
   
 
-module.exports = { getConnectionToken, createPaymentIntent, capturePaymentIntent };
+module.exports = { getConnectionToken, createPaymentIntent, capturePaymentIntent  };
