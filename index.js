@@ -8,7 +8,7 @@ const products = require("./routes/product.js")
 const cart = require("./routes/cart.js")
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello World!')
+  res.status(200).send('Hello World waqar!')
   console.log("hy")
 })
 
